@@ -10,12 +10,15 @@ class Chatbot:
         openai.api_key = api
 
     def get_response(self, user_input):
-        response = openai.Completion.create(
-            engine="text-davinci-003",
-            prompt=user_input,
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": user_input}
+            ],
             max_tokens=4000,
             temperature=0.5
-        ).choices[0].text
+        ).choices[0].message.content
 
         return response
 
